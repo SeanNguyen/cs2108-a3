@@ -5,7 +5,8 @@ angular.module('webserverApp', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'ngMaterial'
+  'ngMaterial',
+  'LocalStorageModule'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider

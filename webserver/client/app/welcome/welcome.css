@@ -1,0 +1,25 @@
+.welcome {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	padding-top: 10%;
+
+	background-size: cover;
+    background-repeat: no-repeat;
+	background-image: url("../../assets/images/login_background.jpg");
+}
+
+.welcome h1 {
+	color: #FCFCFC;
+	font-size: 50px;
+	font-weight: 100;
+}
+
+.welcome {
+	color: #FCFCFC;
+}
+
+.welcome md-input-container .md-input {
+	color: #FCFCFC;
+    border-color: #FCFCFC;
+}
