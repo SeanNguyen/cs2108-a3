@@ -1,15 +1,21 @@
 'use strict';
 
-angular.module('webserverApp')
-  .controller('NavbarCtrl', function ($scope, $location) {
-    $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
-    }];
+var app = angular.module('webserverApp');
+app.controller('NavbarCtrl', NavbarCtrl);
 
-    $scope.isCollapsed = true;
+function NavbarCtrl($scope, localStorageService, $state) {
+    $scope.username;
+    $scope.signOut = signOut;
+    
+    active();
+    
+    //implementations
+    function active() {
+        $scope.username = localStorageService.get("username");
+    }
 
-    $scope.isActive = function(route) {
-      return route === $location.path();
-    };
-  });
+    function signOut() {
+        localStorageService.remove("username");
+        $state.go("welcome");
+    }
+};
