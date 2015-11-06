@@ -1,3 +1,10 @@
 <div class="main">
 	<div ng-include="'components/navbar/navbar.html'"></div>
+	<div>
+		<form action="api/upload" method="post" enctype="multipart/form-data">
+			<input type="file" name="image" accept=".jpg">
+			<input type="text" name="imageName" value="abc.jpg" hidden>
+			<input type="submit">
+		</form>
+	</div>
 </div>
