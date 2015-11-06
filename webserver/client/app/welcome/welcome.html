@@ -1,7 +1,7 @@
 <div layout="column" layout-align="start center" class="welcome">
 	<h1 ng-bind="welcomeMessage">Tell Us Your Name<i class="fa fa-arrow-right"></i></h1>
 	<md-input-container>
-      <input aria-label="username" ng-model="input.username">
+      <input aria-label="username" id="username" ng-model="input.username">
     </md-input-container>
-    <md-button ng-show="input.username" ng-click="logIn(input.username)">Start the Awesomeness&emsp;<i class="fa fa-arrow-right"></i></md-button>
+    <md-button ng-show="input.username" id="loginButton" ng-click="logIn(input.username)">Start the Awesomeness&emsp;<i class="fa fa-arrow-right"></i></md-button>
 </div>

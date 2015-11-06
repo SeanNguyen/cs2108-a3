@@ -17,6 +17,12 @@ function WelcomeController($scope, $state, localStorageService) {
   			$scope.input.username = username;
   			$scope.welcomeMessage = "Welcome";
   		}
+
+      $("#username").keyup(function(event){
+          if(event.keyCode == 13){
+              $("#loginButton").click();
+          }
+      });
   	}
 
   	function logIn(username) {
