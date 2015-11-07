@@ -1,21 +1,15 @@
 <div class="main">
 	<div ng-include="'components/navbar/navbar.html'"></div>
 	<div>
-		<!-- <form action="api/upload" method="post" enctype="multipart/form-data">
-			<input type="file" name="image" accept=".jpg">
-			<input type="text" name="imageName" value="{{uploadImageId}}.jpg" hidden>
-			<input type="submit">
-		</form> -->
-
 		<input type="file" nv-file-select uploader="uploader"/>
 		<div layout="row" layout-align=" start" layout-wrap>
 			<div class="grid" ng-repeat="photo in photos" flex="50" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="20">
-				<div class="imageContainer">
+				<md-button class="imageContainer" href="photo/{{photo._id}}">
 					<img ng-src="{{photo.path}}">
 					<h4>{{photo.name}}</h4>
 					<p>{{photo.description}}</p>
 					Tags: <span ng-repeat="tag in photo.tags">#{{tag}} </span>
-				</div>	
+				</md-button>	
 			</div>
 		</div>
 	</div>
