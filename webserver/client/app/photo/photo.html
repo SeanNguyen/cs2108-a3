@@ -8,24 +8,27 @@
 
 		<div flex="100" flex-gt-sm="40">
 			<form name="infoForm">
+				<h4>Owner: {{photo.user}}</h4>
 				<md-input-container class="md-block">
 					<label>Photo Name</label>
-					<input required name="photoName" ng-model="photo.name" ng-change="setDirty()">
+					<input required name="photoName" ng-model="photo.name" ng-change="setDirty()" ng-disabled="readonly">
 					<div ng-messages="infoForm.photoName.$error">
 						<div ng-message="required">This is required.</div>
 					</div>
 				</md-input-container>
 				<md-input-container class="md-block">
 					<label>Description</label>
-					<textarea name="photoDescription" ng-model="photo.description" columns="1" rows="2" ng-change="setDirty()"></textarea>
+					<textarea name="photoDescription" ng-model="photo.description" columns="1" rows="2" ng-change="setDirty()" ng-disabled="readonly"></textarea>
 				</md-input-container>
-				<label>Owner: {{photo.user}}</label>
 			</form>
 			<br>
-			<label ng-repeat="tag in photo.tags">{{tag}} </label>
-
-
-			<br>
+			<md-chips ng-model="photo.tags" readonly="readonly" placeholder="+ tag" delete-button-label="Remove Tag"
+		        delete-hint="Press delete to remove tag" secondary-placeholder="Enter to add tag"
+		        md-on-remove="setDirty()" md-on-append="onTagAppend($chip)">
+		      <md-chip-template>
+		      	<a href="tag/{{$chip}}"><strong>{{$chip}}</strong></a>
+		      </md-chip-template>
+		    </md-chips>
 			<md-button class="md-primary md-raised saveButton" ng-disabled="saving" ng-click="save()" ng-show="infoChanged">Save Changes</md-button>
 		</div>
 	</div>

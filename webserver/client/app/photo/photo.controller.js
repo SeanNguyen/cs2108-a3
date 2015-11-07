@@ -5,12 +5,14 @@ var app = angular.module('webserverApp');
 app.controller('PhotoCtrl', PhotoCtrl);
 
 function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams) {
-    $scope.photo;
+    $scope.readonly;
+    $scope.photo = { tags: []};
     $scope.infoChanged;
     $scope.saving;
     
     $scope.save = save;
     $scope.setDirty = setDirty;
+    $scope.onTagAppend = onTagAppend;
     
 
     active();
@@ -25,6 +27,12 @@ function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams) {
         Photo.get({id: photoId}).$promise
         .then(function(res) {
             $scope.photo = res;
+
+            //get local user
+            var localUser = localStorageService.get('username');
+            if(!localUser || localUser !== $scope.photo.user) {
+               $scope.readonly = true; 
+            }
         })
         .catch(function(err) {
             $scope.photo = null;
@@ -51,5 +59,10 @@ function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams) {
         if(!$scope.saving) {
             $scope.infoChanged = true;
         }
+    }
+
+    function onTagAppend(tag) {
+        setDirty();
+        return tag;
     }
 }
