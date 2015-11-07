@@ -1,0 +1,36 @@
+<div class="photoView" layout="row" layout-align="center center">
+	<div ng-include="'components/navbar/navbar.html'"></div>
+	
+	<div class="mainContainer" ng-show="photo" layout="row" layout-align="start start">
+		<div flex="100" flex-gt-sm="60" class="imageContainer">
+			<img ng-src="{{photo.path}}">
+		</div>
+
+		<div flex="100" flex-gt-sm="40">
+			<form name="infoForm">
+				<md-input-container class="md-block">
+					<label>Photo Name</label>
+					<input required name="photoName" ng-model="photo.name" ng-change="setDirty()">
+					<div ng-messages="infoForm.photoName.$error">
+						<div ng-message="required">This is required.</div>
+					</div>
+				</md-input-container>
+				<md-input-container class="md-block">
+					<label>Description</label>
+					<textarea name="photoDescription" ng-model="photo.description" columns="1" rows="2" ng-change="setDirty()"></textarea>
+				</md-input-container>
+				<label>Owner: {{photo.user}}</label>
+			</form>
+			<br>
+			<label ng-repeat="tag in photo.tags">{{tag}} </label>
+
+
+			<br>
+			<md-button class="md-primary md-raised saveButton" ng-disabled="saving" ng-click="save()" ng-show="infoChanged">Save Changes</md-button>
+		</div>
+	</div>
+
+	<div ng-show="!photo">
+		<div ng-include="'app/loader/loader.html'"></div>
+	</div>
+</div>

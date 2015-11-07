@@ -7,7 +7,8 @@ angular.module('webserverApp', [
   'ui.router',
   'ngMaterial',
   'LocalStorageModule',
-  'angularFileUpload'
+  'angularFileUpload',
+  'ngMessages'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider

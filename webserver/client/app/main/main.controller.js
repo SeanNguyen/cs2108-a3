@@ -4,7 +4,7 @@ var app = angular.module('webserverApp');
 
 app.controller('MainCtrl', MainCtrl);
 
-function MainCtrl($scope, $http, localStorageService, $state, Photo, FileUploader) {
+function MainCtrl($scope, localStorageService, $state, Photo, FileUploader) {
   	$scope.username;
     $scope.uploadImageId;
     $scope.uploader = new FileUploader();

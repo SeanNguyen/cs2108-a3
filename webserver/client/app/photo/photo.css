@@ -1,0 +1,18 @@
+.photoView {
+	padding: 60px 10px;
+	min-height: 300px;
+}
+
+.photoView .imageContainer {
+	padding: 10px;
+}
+
+.photoView .imageContainer img {
+	width: 100%;
+	height: auto;
+}
+
+.photoView .saveButton {
+	width: 100%;
+	margin: 10px 0;
+}
