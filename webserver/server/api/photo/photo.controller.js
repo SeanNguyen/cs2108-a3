@@ -14,10 +14,20 @@ var Thing = require('./photo.model');
 
 // Get list of things
 exports.index = function(req, res) {
-  Thing.find(function (err, things) {
+  var username = req.query.username;
+  var tag = req.query.tag;
+  var query = Thing.find();
+  if(username) {
+    query.where("user").equals(username);
+  }
+  if(tag) {
+    query.where("tags").equals(tag);
+  }
+  query.exec()
+  .then(function (things, err) {
     if(err) { return handleError(res, err); }
     return res.json(200, things);
-  });
+  })
 };
 
 // Get a single thing
