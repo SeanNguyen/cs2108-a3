@@ -1,10 +1,12 @@
 <div class="main">
 	<div ng-include="'components/navbar/navbar.html'"></div>
 	<div>
-		<form action="api/upload" method="post" enctype="multipart/form-data">
+		<!-- <form action="api/upload" method="post" enctype="multipart/form-data">
 			<input type="file" name="image" accept=".jpg">
-			<input type="text" name="imageName" value="abc.jpg" hidden>
+			<input type="text" name="imageName" value="{{uploadImageId}}.jpg" hidden>
 			<input type="submit">
-		</form>
+		</form> -->
+
+		<input type="file" nv-file-select uploader="uploader"/>
 	</div>
 </div>
