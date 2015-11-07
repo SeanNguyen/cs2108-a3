@@ -8,5 +8,15 @@
 		</form> -->
 
 		<input type="file" nv-file-select uploader="uploader"/>
+		<div layout="row" layout-align=" start" layout-wrap>
+			<div class="grid" ng-repeat="photo in photos" flex="50" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="20">
+				<div class="imageContainer">
+					<img ng-src="{{photo.path}}">
+					<h4>{{photo.name}}</h4>
+					<p>{{photo.description}}</p>
+					Tags: <span ng-repeat="tag in photo.tags">#{{tag}} </span>
+				</div>	
+			</div>
+		</div>
 	</div>
 </div>

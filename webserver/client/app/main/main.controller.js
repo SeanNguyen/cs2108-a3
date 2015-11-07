@@ -8,17 +8,33 @@ function MainCtrl($scope, $http, localStorageService, $state, Photo, FileUploade
   	$scope.username;
     $scope.uploadImageId;
     $scope.uploader = new FileUploader();
-    $scope.uploading = false;
+    $scope.uploading;
+    $scope.loading;
+    $scope.photos;
 
   	active();
   	
   	//implementations
   	function active() {
+        $scope.uploading = false;
+        
   		$scope.username = localStorageService.get("username");
   		if(!$scope.username) {
   			$state.go("welcome");
   		}
 
+        //load images of current user
+        $scope.loading = true;
+        Photo.query({username :$scope.username})
+        .$promise.then(function(res) {
+            $scope.photos = res;
+            $scope.loading = false;
+        })
+        .catch(function(err) {
+            alert("Cannot connect to server");
+        });
+
+        //set up uploader
         $scope.uploader.url = "api/upload";
         $scope.uploader.alias = "image";
         $scope.uploader.formData = [{username: $scope.username}];

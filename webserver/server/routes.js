@@ -13,7 +13,7 @@ module.exports = function(app) {
   app.use('/api/things', require('./api/thing'));
   app.use('/api/photo', require('./api/photo'));
   app.use('/api/upload', require('./api/upload'));
-  app.use('/image', express.static(__dirname + '/../imageRepo'));
+  app.use('/imageRepo', express.static(__dirname + '/../imageRepo'));
   console.log(__dirname + '/../../imageRepo');
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
