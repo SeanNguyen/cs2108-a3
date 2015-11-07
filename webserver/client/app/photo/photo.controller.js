@@ -4,11 +4,12 @@ var app = angular.module('webserverApp');
 
 app.controller('PhotoCtrl', PhotoCtrl);
 
-function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams) {
+function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams, $q) {
     $scope.readonly;
     $scope.photo = { tags: []};
     $scope.infoChanged;
     $scope.saving;
+    $scope.suggestTags;
     
     $scope.save = save;
     $scope.setDirty = setDirty;
@@ -33,6 +34,19 @@ function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams) {
             if(!localUser || localUser !== $scope.photo.user) {
                $scope.readonly = true; 
             }
+
+            //if there is no tag on the photo, then suggest some tags
+            if(!$scope.photo.tags || $scope.photo.tags.length === 0) {
+                getSuggestedTags($scope.photo.path)
+                .then(function(tags) {
+                    $scope.photo.tags = tags;
+                    $scope.suggestTags = true;
+                    setDirty();
+                })
+                .catch(function(err) {
+                    console.log("Fail to get result from search engine");
+                })
+            }
         })
         .catch(function(err) {
             $scope.photo = null;
@@ -40,6 +54,7 @@ function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams) {
 
         $scope.infoChanged = false;
         $scope.saving = false;
+        $scope.suggestTags = false;
     }
 
     function save () {
@@ -48,6 +63,8 @@ function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams) {
         .then(function(res) {
             $scope.infoChanged = false;
             $scope.saving = false;
+            $scope.suggestTags = false;
+            reportTagResult($scope.photo.path, $scope.photo.tags);
         })
         .catch(function(err) {
             $scope.saving = false;
@@ -64,5 +81,18 @@ function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams) {
     function onTagAppend(tag) {
         setDirty();
         return tag;
+    }
+
+    function getSuggestedTags (imagePath) {
+        //call search engine
+        var defer = $q.defer();
+
+        defer.resolve(["cat", "dog", "fish"]);
+
+        return defer.promise;
+    }
+
+    function reportTagResult(imagePath, tags) {
+        //call engine
     }
 }

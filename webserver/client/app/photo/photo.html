@@ -22,6 +22,7 @@
 				</md-input-container>
 			</form>
 			<br>
+			<p ng-show="suggestTags">Suggested tags</p>
 			<md-chips ng-model="photo.tags" readonly="readonly" placeholder="+ tag" delete-button-label="Remove Tag"
 		        delete-hint="Press delete to remove tag" secondary-placeholder="Enter to add tag"
 		        md-on-remove="setDirty()" md-on-append="onTagAppend($chip)">
