@@ -7,6 +7,10 @@
 	padding: 10px;
 }
 
+.main .grid .md-button {
+	width: 100%;
+}
+
 .main .imageContainer {
 	padding: 10px;
 	border: solid 1px #F44336;

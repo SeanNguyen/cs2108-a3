@@ -4,13 +4,15 @@
 		<h4>Upload a photo</h4>
 		<input type="file" nv-file-select uploader="uploader"/>
 		<h4>Your photos</h4>
-		<div layout="row" layout-align=" start" layout-wrap>
+		<div layout="row" layout-align="start start" layout-wrap>
 			<div class="grid" ng-repeat="photo in photos" flex="50" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="20">
 				<md-button class="imageContainer" href="photo/{{photo._id}}">
 					<img ng-src="{{photo.path}}">
 					<h4>{{photo.name}}</h4>
 					<p>{{photo.description}}</p>
-					Tags: <span ng-repeat="tag in photo.tags">#{{tag}} </span>
+					<div layout="row" layout-align=" start" layout-wrap>
+						<a href="tag/{{tag}}" ng-repeat="tag in photo.tags">_#{{tag}}_</a>
+					</div>
 				</md-button>	
 			</div>
 		</div>
