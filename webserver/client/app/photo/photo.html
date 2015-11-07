@@ -1,7 +1,7 @@
 <div class="photoView" layout="row" layout-align="center center">
 	<div ng-include="'components/navbar/navbar.html'"></div>
 	
-	<div class="mainContainer" ng-show="photo" layout="row" layout-align="start start">
+	<div class="mainContainer" ng-show="photo" layout="row" layout-align="start start" layout-wrap>
 		<div flex="100" flex-gt-sm="60" class="imageContainer">
 			<img ng-src="{{photo.path}}">
 		</div>
