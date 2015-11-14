@@ -22,3 +22,7 @@
 restful api at localhost:1111
 /get_tags?=filename
 /set_tags?=filename&tags={"tags": []}
+
+test query data
+http://nyanpa.su/query.csv
+http://nyanpa.su/query.rar
