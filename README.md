@@ -10,10 +10,11 @@
 - Enjoy!!!
 
 ###HOW TO START IMAGECLASSIFIER
-- require: python 2.7.x, nltk, opencv for python, semanticFeature from assignment 1
+- require: python 2.7.x, cherrypy, nltk, opencv for python, semanticFeature from assignment 1
 - install python 2.7.x
 - install nltk
 - http://docs.opencv.org/master/d5/de5/tutorial_py_setup_in_windows.html#gsc.tab=0 opencv for python
+- https://pypi.python.org/pypi/CherryPy
 - start python shell "import nltk", "nltk.download()" and download WordNet corpus
 - place semanticFeature in same folder as webserver
 - download training data i've uploaded to http://nyanpa.su/uploads.rar and extract to webserver/uploads
