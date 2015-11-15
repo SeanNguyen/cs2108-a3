@@ -1,7 +1,7 @@
 <div class="photoView" layout="row" layout-align="center center">
 	<div ng-include="'components/navbar/navbar.html'"></div>
 	
-	<div class="mainContainer" ng-show="photo" layout="row" layout-align="start start" layout-wrap>
+	<div class="mainContainer" ng-show="!loading" layout="row" layout-align="start start" layout-wrap>
 		<div flex="100" flex-gt-sm="60" class="imageContainer">
 			<img ng-src="{{photo.path}}">
 		</div>
@@ -27,14 +27,15 @@
 		        delete-hint="Press delete to remove tag" secondary-placeholder="Enter to add tag"
 		        md-on-remove="setDirty()" md-on-append="onTagAppend($chip)">
 		      <md-chip-template>
-		      	<a href="tag/{{$chip}}"><strong>{{$chip}}</strong></a>
+		      	<a href="tag/{{$chip}}">{{$chip}}</a>
 		      </md-chip-template>
 		    </md-chips>
 			<md-button class="md-primary md-raised saveButton" ng-disabled="saving" ng-click="save()" ng-show="infoChanged">Save Changes</md-button>
 		</div>
 	</div>
 
-	<div ng-show="!photo">
+	<div ng-show="loading" layout="column" layout-align="center center">
 		<div ng-include="'app/loader/loader.html'"></div>
+		<h4 class="loadingMessage">Processing Photo</h4>
 	</div>
 </div>

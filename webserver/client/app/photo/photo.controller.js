@@ -4,12 +4,13 @@ var app = angular.module('webserverApp');
 
 app.controller('PhotoCtrl', PhotoCtrl);
 
-function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams, $q) {
+function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams, $q, $http) {
     $scope.readonly;
     $scope.photo = { tags: []};
     $scope.infoChanged;
     $scope.saving;
     $scope.suggestTags;
+    $scope.loading;
     
     $scope.save = save;
     $scope.setDirty = setDirty;
@@ -37,14 +38,17 @@ function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams, $q)
 
             //if there is no tag on the photo, then suggest some tags
             if(!$scope.photo.tags || $scope.photo.tags.length === 0) {
+                $scope.loading = true;
                 getSuggestedTags($scope.photo.path)
                 .then(function(tags) {
                     $scope.photo.tags = tags;
                     $scope.suggestTags = true;
+                    $scope.loading = false;
                     setDirty();
                 })
                 .catch(function(err) {
                     console.log("Fail to get result from search engine");
+                    $scope.loading = false;
                 })
             }
         })
@@ -54,6 +58,7 @@ function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams, $q)
 
         $scope.infoChanged = false;
         $scope.saving = false;
+        $scope.loading = false;
         $scope.suggestTags = false;
     }
 
@@ -84,10 +89,18 @@ function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams, $q)
     }
 
     function getSuggestedTags (imagePath) {
+        var imageFile = imagePath.replace("uploads/", "");
         //call search engine
         var defer = $q.defer();
-
-        defer.resolve(["cat", "dog", "fish"]);
+        $http({
+          method: 'GET',
+          url: 'http://localhost:1111/get_tags?img=' + imageFile
+        })
+        .then(function successCallback(response) {
+            defer.resolve(response.data.tags);
+        }, function errorCallback(err) {
+            defer.reject(err);
+        });
 
         return defer.promise;
     }

@@ -1,47 +1,47 @@
-.tag {
+.tagSearch {
 	padding: 60px 1px;
 }
 
-.tag .title {
+.tagSearch .title {
 	margin: 20px;
 	font-weight: 600;
 	color: #555;
 }
 
-.tag .noResultContainer {
+.tagSearch .noResultContainer {
 	height: 200px;
 }
 
-.tag .grid {
+.tagSearch .grid {
 	min-width: 150px;
 	padding: 10px;
 }
 
-.tag .grid .md-button {
+.tagSearch .grid .md-button {
 	width: 100%;
 	text-transform: none;
 }
 
-.tag .imageContainer {
+.tagSearch .imageContainer {
 	border: solid 1px #F44336;
 }
 
-.tag .imageContainer img {
+.tagSearch .imageContainer img {
 	max-width: 100%;
 	max-height: auto;
 }
 
-.tag .tag {
+.tagSearch .tag {
 	margin: 0 5px;
 	text-decoration: none;
 }
 
-.tag .imageContainer .md-button {
+.tagSearch .imageContainer .md-button {
 	margin: 0;
 	padding: 0;
 	line-height: 0;
 }
 
-.tag .imageContainer .infoContainer {
+.tagSearch .imageContainer .infoContainer {
 	padding: 0 10px 10px;
 }

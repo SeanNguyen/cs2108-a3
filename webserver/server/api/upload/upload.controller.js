@@ -17,7 +17,7 @@ exports.upload = function(req, res) {
 		console.log(req.body);
 
 		//prepare upload folder
-		var uploadFolder = __dirname + "/../../../imageRepo/";
+		var uploadFolder = __dirname + "/../../../uploads/";
 	  	if (!fs.existsSync(uploadFolder)){
 		    fs.mkdirSync(uploadFolder);
 		}
@@ -33,7 +33,7 @@ exports.upload = function(req, res) {
 		photo.create(newPhoto, function(err, model) {
 			if(err) { return handleError(res, err); }
 
-	  		model.path = "imageRepo/" + model._id + ".jpg"
+	  		model.path = "uploads/" + model._id + ".jpg"
 	  		model.save(function (err) {
 		      	if (err) { return handleError(res, err); }
 		      	//write image to destination folder

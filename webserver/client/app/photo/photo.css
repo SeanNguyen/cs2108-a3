@@ -7,6 +7,12 @@
 	padding: 10px;
 }
 
+.photoView .loadingMessage {
+	color: #888;
+	font-weight: 500;
+	font-size: 15px;
+}
+
 .photoView .imageContainer img {
 	width: 100%;
 	height: auto;
@@ -15,4 +21,15 @@
 .photoView .saveButton {
 	width: 100%;
 	margin: 10px 0;
+}
+
+.photoView md-chip {
+	background-color: #FCFCFC;
+	border: solid 1px #4CAF50;
+}
+
+.photoView md-chip-template a {
+	text-decoration: none;
+	color: #777;
+	font-size: 14px;
 }
