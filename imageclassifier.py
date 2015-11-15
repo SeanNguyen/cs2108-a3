@@ -20,7 +20,7 @@ def add_to_index_file(index_file, img, tags):
         csvwriter.writerow(line)
 
 def get_image_semantics(image_path, image_name):
-    semantics_path = image_path + image_name.replace(".jpg", ".txt")
+    semantics_path = image_path+image_name.replace(".jpg","") + ".txt"
     with open(semantics_path, "rb") as semantics_file:
         for row in semantics_file:
             return row.split(" ")
@@ -63,7 +63,7 @@ def unpickle_keypoints(array):
     return keypoints, np.array(descriptors)
 
 def get_sift_descriptors(sift, img_name, image_path, load=True):
-    sift_file = image_path+img_name.replace(".jpg",".sift")
+    sift_file = image_path+img_name.replace(".jpg","") + ".sift"
     if not path.exists(sift_file):
         img = cv2.imread(image_path+img_name,0)
         kp, des = sift.detectAndCompute(img,None)
@@ -133,7 +133,8 @@ class ImageClassifier:
 
     def __process_semantics(self, file_name, file_path):
         print "retrieving visual semantic features"
-        if not path.exists(file_path+file_name.replace(".jpg",".txt")):
+        semantics_file = file_path+file_name.replace(".jpg","") + ".txt"
+        if not path.exists(semantics_file):
             inputfile = open("./semanticFeature/temp.txt", "w")
             absfilepath = path.abspath(file_path+file_name)
             inputfile.write(absfilepath)
