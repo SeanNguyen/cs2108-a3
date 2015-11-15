@@ -7,7 +7,7 @@
 		<div layout="row" layout-align="start start" layout-wrap>
 			<div class="grid" ng-repeat="photo in photos" flex="50" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="20">
 				<div class="imageContainer">
-					<md-button ng-href="photo/{{photo._id}}">
+					<md-button ng-href="photo/{{photo._id}}" aria-label="view">
 						<img ng-src="{{photo.path}}">
 					</md-button>
 					<div class="infoContainer">

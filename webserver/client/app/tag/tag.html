@@ -1,0 +1,25 @@
+<div class="tag">
+	<div ng-include="'components/navbar/navbar.html'"></div>
+
+	<h4 class="title">Photo with tag: {{tag}}</h4>
+	<div layout="row" layout-align="start start" layout-wrap>
+		<div class="grid" ng-repeat="photo in photos" flex="50" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="20">
+			<div class="imageContainer">
+				<md-button ng-href="photo/{{photo._id}}" aria-label="view">
+					<img ng-src="{{photo.path}}">
+				</md-button>
+				<div class="infoContainer">
+					<h4>{{photo.name}}</h4>
+					<p>{{photo.description}}</p>
+					<div layout="row" layout-align=" start" layout-wrap>
+						<a href="tag/{{tag}}" ng-repeat="tag in photo.tags" class="tag">#{{tag}}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div ng-show="!tag || photos" class="noResultContainer" layout="row" layout-align="center center">
+		No Photo Found
+	</div>
+</div>
