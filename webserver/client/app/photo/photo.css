@@ -5,6 +5,8 @@
 
 .photoView .imageContainer {
 	padding: 10px;
+	background-color: transparent;
+	box-shadow: none;
 }
 
 .photoView .loadingMessage {

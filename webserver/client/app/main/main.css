@@ -24,10 +24,6 @@
 	text-transform: none;
 }
 
-.main .imageContainer {
-	border: solid 1px #F44336;
-}
-
 .main .imageContainer img {
 	max-width: 100%;
 	max-height: auto;
@@ -48,4 +44,14 @@
 
 .main .imageContainer .infoContainer {
 	padding: 0 10px 10px;
+}
+
+label.myLabel input[type="file"] {
+    position: fixed;
+    top: -1000px;
+}
+
+.main .bottomBar {
+	position: fixed;
+	bottom: 0;
 }

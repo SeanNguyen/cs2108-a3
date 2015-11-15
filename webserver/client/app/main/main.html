@@ -1,8 +1,6 @@
 <div class="main">
 	<div ng-include="'components/navbar/navbar.html'"></div>
 	<div>
-		<h4 class="title">Upload a photo</h4>
-		<input class="uploadFile" type="file" nv-file-select uploader="uploader"/>
 		<h4 class="title">Your photos</h4>
 		<div layout="row" layout-align="start start" layout-wrap>
 			<div class="grid" ng-repeat="photo in photos" flex="50" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="20">
@@ -20,5 +18,14 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="bottomBar">
+		<span class="title">Upload a photo</span>
+		<md-button class="md-raised md-primary">
+			<label for="upload">
+			    Select Photo
+			</label>
+		</md-button>
+		<input id="upload" ng-show="false" type="file" class="upload" nv-file-select uploader="uploader"/>
 	</div>
 </div>

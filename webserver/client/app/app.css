@@ -28,7 +28,20 @@ md-input-container .md-input {
 }
 
 html, body {
-    background-color: #FCFCFC;
+    background-color: #EEE;
 	font-family: 'Roboto', sans-serif;
 	color: #333;
+}
+
+.tag {
+    padding: 0;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #888;
+}
+
+.imageContainer {
+    background-color: #FCFCFC;
+    box-shadow: 2px 2px 5px #888888;
+    border-radius: 5px;
 }

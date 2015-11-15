@@ -13,3 +13,7 @@
 .navbar .homeButton {
 	width: 10px;
 }
+
+.navbar .md-button {
+	text-transform: none;
+}

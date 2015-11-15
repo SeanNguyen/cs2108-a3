@@ -22,18 +22,9 @@
 	text-transform: none;
 }
 
-.tagSearch .imageContainer {
-	border: solid 1px #F44336;
-}
-
 .tagSearch .imageContainer img {
 	max-width: 100%;
 	max-height: auto;
-}
-
-.tagSearch .tag {
-	margin: 0 5px;
-	text-decoration: none;
 }
 
 .tagSearch .imageContainer .md-button {
