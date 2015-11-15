@@ -19,7 +19,11 @@
 		</div>
 	</div>
 
-	<div ng-show="!tag || !photos || photos.length === 0" class="noResultContainer" layout="row" layout-align="center center">
+	<div ng-show="photos.length === 0" class="noResultContainer" layout="row" layout-align="center center">
 		No Photo Found
 	</div>
+
+	<div ng-show="loading" class="noResultContainer" layout="row" layout-align="center center">
+		<div ng-include="'app/loader/loader.html'"></div>
+	</div>	
 </div>

@@ -4,10 +4,10 @@
 	right: 0; left: 0;
 	z-index: 100;
 
-	background-color: #FCFCFC;
+	background-color: #4CAF50;
 	height: 50px;
 	padding: 0 10px;
-	color: #333;
+	color: #FCFCFC;
 }
 
 .navbar .homeButton {

@@ -40,6 +40,7 @@
 	margin: 0;
 	padding: 0;
 	line-height: 0;
+	border-radius: 0;
 }
 
 .main .imageContainer .infoContainer {
@@ -52,6 +53,12 @@ label.myLabel input[type="file"] {
 }
 
 .main .bottomBar {
+	border-top: solid 2px #4CAF50;
+	border-right: solid 2px #4CAF50;
+	border-left: none;
+	border-bottom: none;
+	border-radius: 0 10px 0 0;
+	background-color: #FCFCFC;
 	position: fixed;
 	bottom: 0;
 }
