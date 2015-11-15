@@ -62,3 +62,12 @@ label.myLabel input[type="file"] {
 	position: fixed;
 	bottom: 0;
 }
+
+.main .bottomBar .md-button {
+	padding: 0;
+}
+
+.main .bottomBar .md-button label {
+	cursor: pointer;
+	padding: 10px;
+}
