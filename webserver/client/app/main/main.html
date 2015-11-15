@@ -1,19 +1,23 @@
 <div class="main">
 	<div ng-include="'components/navbar/navbar.html'"></div>
 	<div>
-		<h4>Upload a photo</h4>
-		<input type="file" nv-file-select uploader="uploader"/>
-		<h4>Your photos</h4>
+		<h4 class="title">Upload a photo</h4>
+		<input class="uploadFile" type="file" nv-file-select uploader="uploader"/>
+		<h4 class="title">Your photos</h4>
 		<div layout="row" layout-align="start start" layout-wrap>
 			<div class="grid" ng-repeat="photo in photos" flex="50" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="20">
-				<md-button class="imageContainer" href="photo/{{photo._id}}">
-					<img ng-src="{{photo.path}}">
-					<h4>{{photo.name}}</h4>
-					<p>{{photo.description}}</p>
-					<div layout="row" layout-align=" start" layout-wrap>
-						<a href="tag/{{tag}}" ng-repeat="tag in photo.tags">_#{{tag}}_</a>
+				<div class="imageContainer">
+					<md-button ng-href="photo/{{photo._id}}">
+						<img ng-src="{{photo.path}}">
+					</md-button>
+					<div class="infoContainer">
+						<h4>{{photo.name}}</h4>
+						<p>{{photo.description}}</p>
+						<div layout="row" layout-align=" start" layout-wrap>
+							<a href="tag/{{tag}}" ng-repeat="tag in photo.tags" class="tag">#{{tag}}</a>
+						</div>
 					</div>
-				</md-button>	
+				</div>
 			</div>
 		</div>
 	</div>

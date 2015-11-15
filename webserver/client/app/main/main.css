@@ -1,5 +1,17 @@
 .main {
-	padding: 60px 0;
+	padding: 60px 1px;
+}
+
+.main .title {
+	margin: 20px;
+	font-weight: 600;
+	color: #555;
+}
+
+.main .uploadFile {
+	margin: 20px;
+	padding: 10px;
+	border: solid 1px #4CAF50;
 }
 
 .main .grid {
@@ -9,14 +21,29 @@
 
 .main .grid .md-button {
 	width: 100%;
+	text-transform: none;
 }
 
 .main .imageContainer {
-	padding: 10px;
 	border: solid 1px #F44336;
 }
 
 .main .imageContainer img {
 	max-width: 100%;
 	max-height: auto;
+}
+
+.main .tag {
+	margin: 0 5px;
+	text-decoration: none;
+}
+
+.main .imageContainer .md-button {
+	margin: 0;
+	padding: 0;
+	line-height: 0;
+}
+
+.main .imageContainer .infoContainer {
+	padding: 0 10px 10px;
 }
