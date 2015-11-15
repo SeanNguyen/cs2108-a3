@@ -110,7 +110,7 @@ function PhotoCtrl($scope, localStorageService, $state, Photo, $stateParams, $q,
         var url = 'http://localhost:1111/set_tags?img=' + imageFile 
                     + '&tags={"tags":['
         for (var i = tags.length - 1; i >= 0; i--) {
-            if(i < tags.length - 1) {
+            if(i > 0) {
                 url += '"' + tags[i] + '",'
             } else {
                 url += '"' + tags[i] + '"'
