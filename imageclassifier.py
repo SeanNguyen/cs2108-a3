@@ -150,13 +150,14 @@ class ImageClassifier:
         sift_match_rank = []
         for img_name, sim in candidates:
             kp2, des2 = get_sift_descriptors(self.sift, img_name, self.train_dir)
-            matches = self.flann.knnMatch(des1,des2,k=2)
-            i = 0
-            # ratio test as per Lowe's paper
-            for i,(m,n) in enumerate(matches):
-                if m.distance < 0.7*n.distance:
-                    i += 1
-            sift_match_rank.append((img_name, i+sim))
+            if len(des1) > 0 and len(des2) > 0:
+                matches = self.flann.knnMatch(des1,des2,k=2)
+                i = 0
+                # ratio test as per Lowe's paper
+                for i,(m,n) in enumerate(matches):
+                    if m.distance < 0.7*n.distance:
+                        i += 1
+                sift_match_rank.append((img_name, i+sim))
         sift_match_rank = sorted(sift_match_rank, key=lambda s: s[1])
         return sift_match_rank[len(sift_match_rank)-50:]
 
