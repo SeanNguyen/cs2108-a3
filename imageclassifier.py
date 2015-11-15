@@ -186,10 +186,13 @@ class Restful_api(object):
         self.ic.add_image(img, tags["tags"])
         return ""
 
-if __name__ == "__main__":
+def CORS():
+    cherrypy.response.headers["Access-Control-Allow-Origin"] = "*"
 
+if __name__ == "__main__":
     ic = ImageClassifier()
-    cherrypy.config.update({'server.socket_host': '0.0.0.0',
-                            'server.socket_port': 1111,})
-    cherrypy.quickstart(Restful_api(ic), '/') 
+    cherrypy.tools.CORS = cherrypy.Tool('before_handler', CORS)
+    cherrypy.config.update({'server.socket_host': '0.0.0.0', 'server.socket_port': 1111,})
+    conf = {'/': {'tools.CORS.on': True}}
+    cherrypy.quickstart(Restful_api(ic), '/', conf)
 
