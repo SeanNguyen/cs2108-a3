@@ -2,6 +2,8 @@ import cv2, csv, json, cherrypy
 from subprocess import call
 from os import chdir, path
 from nltk.stem import WordNetLemmatizer
+import cPickle as pickle
+import numpy as np
 
 def get_image_index(index_file):
     indexlist = []
@@ -15,7 +17,7 @@ def add_to_index_file(index_file, img, tags):
     with open(index_file, "a") as csvfile:
         csvwriter = csv.writer(csvfile)
         line = [img] + tags
-        csvwriter.write(line)
+        csvwriter.writerow(line)
 
 def get_image_semantics(image_path, image_name):
     semantics_path = image_path + image_name.replace(".jpg", ".txt")
@@ -24,7 +26,7 @@ def get_image_semantics(image_path, image_name):
             return row.split(" ")
 
 def find_top_10_tags(images, top_images):
-    "performing lemmatizing and retrieving top 10 tags"
+    print "performing lemmatizing and retrieving top 10 tags"
     word = WordNetLemmatizer()
     tagtotals = {}
     for img, sim in top_images:
@@ -40,6 +42,39 @@ def find_top_10_tags(images, top_images):
     temp = sorted(temp, key=lambda tag: tag[1])
     return temp[len(temp)-10:]
 
+def pickle_keypoints(keypoints, descriptors):
+    i = 0
+    temp_array = []
+    for point in keypoints:
+        temp = (point.pt, point.size, point.angle, point.response, point.octave,
+        point.class_id, descriptors[i])     
+        ++i
+        temp_array.append(temp)
+    return temp_array
+
+def unpickle_keypoints(array):
+    keypoints = []
+    descriptors = []
+    for point in array:
+        temp_feature = cv2.KeyPoint(x=point[0][0],y=point[0][1],_size=point[1], _angle=point[2], _response=point[3], _octave=point[4], _class_id=point[5])
+        temp_descriptor = point[6]
+        keypoints.append(temp_feature)
+        descriptors.append(temp_descriptor)
+    return keypoints, np.array(descriptors)
+
+def get_sift_descriptors(sift, img_name, image_path, load=True):
+    sift_file = image_path+img_name.replace(".jpg",".sift")
+    if not path.exists(sift_file):
+        img = cv2.imread(image_path+img_name,0)
+        kp, des = sift.detectAndCompute(img,None)
+        temp = pickle_keypoints(kp, des)
+        pickle.dump(temp, open(sift_file, "wb"))
+        return (kp, des)
+    elif load:
+        temp = pickle.load(open(sift_file, "rb"))
+        return unpickle_keypoints(temp)
+    return
+    
 class Image:
 
     def __init__(self, filename, tags, visual_hist):
@@ -74,8 +109,8 @@ class ImageClassifier:
 
     def __init__(self):
         self.images = {}
-        self.__load_training_data()
         self.sift = cv2.SIFT()
+        self.__load_training_data()
 
         FLANN_INDEX_KDTREE = 0
         index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
@@ -85,56 +120,63 @@ class ImageClassifier:
 
     def __load_training_data(self):
         indexlist = get_image_index(self.train_index)
+        i = 0
         for row in indexlist:
+            if i % 100 == 0: print "loading %s of %s" % (i, len(indexlist))
             semantics = get_image_semantics(self.train_dir, row[0])
             image = Image(row[0], row[1:], semantics)
             self.images[row[0]] = image
+            #just make sure there exists the serialized file. too large to load all into memory.
+            get_sift_descriptors(self.sift, row[0], self.train_dir, load=False)
+            i += 1
+        print "training images loaded"
 
-    def __process_semantics(self, file_name):
+    def __process_semantics(self, file_name, file_path):
         print "retrieving visual semantic features"
-        if not path.exists(self.train_dir+file_name.replace(".jpg",".txt")):
+        if not path.exists(file_path+file_name.replace(".jpg",".txt")):
             inputfile = open("./semanticFeature/temp.txt", "w")
-            absfilepath = path.abspath(self.train_dir+file_name)
+            absfilepath = path.abspath(file_path+file_name)
             inputfile.write(absfilepath)
             inputfile.close()
             chdir("./semanticFeature")
             return_code = call("image_classification.exe temp.txt")
             chdir("../")
-        return get_image_semantics(self.train_dir, file_name)
+        return get_image_semantics(file_path, file_name)
 
-    def __sift_match_rank(self, file_name, candidates):
-        img1 = cv2.imread(self.train_dir+file_name,0)
+    def __sift_match_rank(self, file_name, candidates, file_path):
+        img1 = cv2.imread(file_path+file_name,0)
         kp1, des1 = self.sift.detectAndCompute(img1,None)
         sift_match_rank = []
         for img_name, sim in candidates:
-            img2 = cv2.imread(self.train_dir+img_name,0)
-            kp2, des2 = self.sift.detectAndCompute(img2,None)
-
+            kp2, des2 = get_sift_descriptors(self.sift, img_name, self.train_dir)
             matches = self.flann.knnMatch(des1,des2,k=2)
             i = 0
             # ratio test as per Lowe's paper
             for i,(m,n) in enumerate(matches):
                 if m.distance < 0.7*n.distance:
                     i += 1
-            sift_match_rank.append((img_name, i))
+            sift_match_rank.append((img_name, i+sim))
         sift_match_rank = sorted(sift_match_rank, key=lambda s: s[1])
         return sift_match_rank[len(sift_match_rank)-50:]
 
-    def __narrow_candidates(self, file_name, candidates):
-        print "narrowing candidate results through secondary sift ranking"
-        return self.__sift_match_rank(file_name, candidates)
+    def __narrow_candidates(self, file_name, candidates, file_path):
+        print "narrowing candidate results through good sift flann matches"
+        return self.__sift_match_rank(file_name, candidates, file_path)
 
-    def classifyImage(self, file_name):
-        semantics = self.__process_semantics(file_name)
+    def classify_image(self, file_name, file_path=train_dir):
+        semantics = self.__process_semantics(file_name, file_path)
         ranking = Ranking(semantics, self.images)
         candidates = ranking.get_top_compare() + ranking.get_top_cosine()
-        candidates = self.__narrow_candidates(file_name, candidates)
+        candidates = self.__narrow_candidates(file_name, candidates, file_path)
         tags = find_top_10_tags(self.images, candidates)
         print tags
         return [tag[0] for tag in tags]
 
     def add_image(self, img, tags):
         add_to_index_file(self.train_index, img, tags)
+        semantics = self.__process_semantics(img, self.train_dir)
+        image = Image(img, tags, semantics)
+        self.images[img] = image
         
 
 class Ranking:
@@ -177,7 +219,7 @@ class Restful_api(object):
 
     @cherrypy.expose
     def get_tags(self, img=""):
-        results = self.ic.classifyImage(img)
+        results = self.ic.classify_image(img)
         return json.dumps({"tags" : results})
 
     @cherrypy.expose
@@ -195,4 +237,3 @@ if __name__ == "__main__":
     cherrypy.config.update({'server.socket_host': '0.0.0.0', 'server.socket_port': 1111,})
     conf = {'/': {'tools.CORS.on': True}}
     cherrypy.quickstart(Restful_api(ic), '/', conf)
-
