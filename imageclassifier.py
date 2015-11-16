@@ -150,7 +150,7 @@ class ImageClassifier:
         sift_match_rank = []
         for img_name, sim in candidates:
             kp2, des2 = get_sift_descriptors(self.sift, img_name, self.train_dir)
-            if len(des1) > 0 and len(des2) > 0:
+            if des1 is not None and des2 is not None and len(des1) > 0 and len(des2) > 0:
                 matches = self.flann.knnMatch(des1,des2,k=2)
                 i = 0
                 # ratio test as per Lowe's paper
